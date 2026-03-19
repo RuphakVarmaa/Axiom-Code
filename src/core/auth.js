@@ -30,10 +30,33 @@ class AuthManager {
         if (!fs.existsSync(this.sessionPath)) return false;
         try {
             const session = JSON.parse(fs.readFileSync(this.sessionPath, 'utf8'));
-            return !!session.token && (new Date(session.expires) > new Date());
+            
+            // 1. Absolute Expiry (3 Days)
+            const absoluteExpiry = new Date(session.createdAt || Date.now());
+            absoluteExpiry.setDate(absoluteExpiry.getDate() + 3);
+            if (new Date() > absoluteExpiry) return false;
+
+            // 2. Inactivity Timeout (2 Days)
+            const lastUsed = new Date(session.lastUsedAt || Date.now());
+            const inactivityLimit = new Date(lastUsed.getTime() + 2 * 24 * 60 * 60 * 1000);
+            if (new Date() > inactivityLimit) return false;
+
+            // 3. Regular Expiry check
+            const isValid = !!session.token && (new Date(session.expires) > new Date());
+            
+            if (isValid) {
+                // Update lastUsedAt
+                this._updateLastUsed(session);
+            }
+            return isValid;
         } catch (e) {
             return false;
         }
+    }
+
+    _updateLastUsed(session) {
+        session.lastUsedAt = new Date().toISOString();
+        fs.writeFileSync(this.sessionPath, JSON.stringify(session, null, 2));
     }
 
     /**
@@ -52,7 +75,9 @@ class AuthManager {
         const session = {
             token,
             user,
-            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+            createdAt: new Date().toISOString(),
+            lastUsedAt: new Date().toISOString(),
+            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
             lastLogin: new Date().toISOString()
         };
         fs.writeFileSync(this.sessionPath, JSON.stringify(session, null, 2));
@@ -60,7 +85,8 @@ class AuthManager {
         // Persist to local database
         try {
             await db.run('INSERT OR REPLACE INTO users (id, email, name) VALUES (?, ?, ?)', [userId, user.email, user.name]);
-            await db.run('INSERT OR REPLACE INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)', [token, userId, session.expires]);
+            await db.run('INSERT OR REPLACE INTO sessions (token, user_id, expires_at, last_used_at) VALUES (?, ?, ?, ?)', 
+                [token, userId, session.expires, session.lastUsedAt]);
         } catch (e) {
             console.error('[AUTH] DB Persistence error:', e);
         }
@@ -79,10 +105,12 @@ class AuthManager {
         console.log(chalk.yellow('\n[AXIOM] Identification Required.'));
         console.log(`${chalk.dim('Connecting to Axiom Identity Portal...')}`);
         
+        const startTime = Date.now();
         // Automatically open browser
         await open('http://localhost:3000/login.html');
         
-        console.log(chalk.cyan('Login Portal opened. Please authenticate to continue.\n'));
+        console.log(chalk.cyan('Login Portal opened. Please authenticate to continue.'));
+        console.log(chalk.dim('Security Note: Verification tokens expire in 3 minutes.\n'));
 
         const readline = require('readline').createInterface({
             input: process.stdin,
@@ -91,8 +119,14 @@ class AuthManager {
 
         return new Promise((resolve) => {
             readline.question(chalk.bold('Paste your Verification Token: '), async (token) => {
-                if (token.startsWith('AXM-')) {
-                    await this.saveSession(token, { name: 'Ruphak User', email: 'user@ruphak.me' });
+                const elapsed = (Date.now() - startTime) / 1000 / 60; // Minutes
+
+                if (elapsed > 3) {
+                    console.log(chalk.red('\n✗ Token Expired. Identification process took more than 3 minutes.'));
+                    console.log(chalk.dim('Please run axiom login again.'));
+                } else if (token.startsWith('AXM-')) {
+                    // In a real elite app, we'd verify the token against the backend here.
+                    await this.saveSession(token, { name: 'Ruphak Varmaa', email: 'ruphak@axiom-code.com' });
                     console.log(chalk.green(`\n${chalk.bold('✓ Authentication Successful.')} Welcome to Axiom Code Elite.`));
                 } else {
                     console.log(chalk.red('\n✗ Invalid Token format. Should start with AXM-'));

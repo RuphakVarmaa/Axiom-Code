@@ -11,21 +11,63 @@
     <style>
         .login-container {
             max-width: 450px;
-            margin: 10rem auto;
+            margin: 6rem auto;
             padding: 3rem;
             background: white;
             border: 1px solid var(--border);
-            border-radius: 24px;
+            border-radius: 32px;
             box-shadow: 0 40px 100px rgba(0,0,0,0.08);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .social-login {
+        
+        /* Account Picker UI */
+        .picker-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .picker-card {
+            background: white;
+            width: 400px;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+        .account-item {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin: 2rem 0;
+            align-items: center;
+            gap: 15px;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
         }
+        .account-item:hover { background: #f3f4f6; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+
+        /* Profile State */
+        .profile-view { display: none; }
+        .loader { 
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px; height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         .btn-social {
+            width: 100%;
             padding: 1rem;
             border-radius: 12px;
             border: 1px solid var(--border);
@@ -36,63 +78,30 @@
             justify-content: center;
             gap: 10px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
+            margin-bottom: 1rem;
         }
-        .btn-social:hover {
-            background: #f9fafb;
-        }
-        .divider {
-            margin: 2rem 0;
-            display: flex;
-            align-items: center;
-            color: var(--text-dim);
-            font-size: 0.85rem;
-        }
-        .divider::before, .divider::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-            margin: 0 1rem;
-        }
-        .input-group {
-            text-align: left;
-            margin-bottom: 1.5rem;
-        }
-        .input-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-dim);
-        }
-        .input-group input {
-            width: 100%;
-            padding: 0.85rem;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        .input-group input:focus {
-            border-color: var(--primary);
-        }
+        .btn-social:hover { background: #f9fafb; transform: translateY(-2px); }
+
         .token-display {
-            display: none;
-            margin-top: 2rem;
-            padding: 1.5rem;
             background: var(--primary-light);
-            border: 1px dashed var(--primary);
-            border-radius: 12px;
+            border: 2px dashed var(--primary);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+            animation: zoomIn 0.3s ease-out;
         }
-        .token-value {
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .token-val {
             font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 800;
             color: var(--primary);
-            font-size: 1.25rem;
             letter-spacing: 2px;
-            margin: 1rem 0;
             display: block;
+            margin: 1rem 0;
+            user-select: all;
         }
     </style>
 </head>
@@ -102,47 +111,138 @@
         <div class="blob blob-2"></div>
     </div>
 
-    <div class="login-container animate">
-        <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Welcome Back</h1>
-        <p style="color: var(--text-dim);">Authenticate with your Axiom identity.</p>
-
-        <div class="social-login">
-            <button class="btn-social" onclick="showToken()">
-                <img src="https://www.google.com/favicon.ico" width="20"> Continue with Google
+    <div class="login-container" id="loginBox">
+        <div id="initialState">
+            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px;">Enter Axiom</h1>
+            <p style="color: var(--text-dim); margin-bottom: 2rem;">Secure agentic portal by **Ruphak Varmaa**.</p>
+            
+            <button class="btn-social" onclick="openPicker()">
+                <img src="https://www.google.com/favicon.ico" width="20"> Sign in with Google
             </button>
-            <button class="btn-social" onclick="showToken()">
-                <img src="https://github.com/favicon.ico" width="20"> Continue with GitHub
+            <button class="btn-social" onclick="openPicker()">
+                <img src="https://github.com/favicon.ico" width="20"> Sign in with GitHub
             </button>
+            
+            <div style="margin: 2rem 0; color: var(--text-dim); font-size: 0.8rem; display: flex; align-items: center; gap: 10px;">
+                <hr style="flex: 1; opacity: 0.2;"> or <hr style="flex: 1; opacity: 0.2;">
+            </div>
+
+            <div style="text-align: left; margin-bottom: 1.5rem;">
+                <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-dim); display: block; margin-bottom: 0.5rem;">Enterprise Email</label>
+                <input type="email" placeholder="name@company.com" style="width: 100%; padding: 1rem; border-radius: 12px; border: 1px solid var(--border); outline: none;">
+            </div>
+            <button class="btn-primary" style="width: 100%;" onclick="openPicker()">Continue</button>
         </div>
 
-        <div class="divider">or</div>
-
-        <div class="input-group">
-            <label>Email Address</label>
-            <input type="email" placeholder="name@company.com">
-        </div>
-        <div class="input-group">
-            <label>Password</label>
-            <input type="password" placeholder="••••••••">
-        </div>
-        
-        <button class="btn-primary" style="width: 100%;" onclick="showToken()">Sign In</button>
-
-        <div id="tokenArea" class="token-display">
-            <p style="font-size: 0.85rem; color: var(--text-dim);">Authentication Successful. Paste this token into your terminal:</p>
-            <span class="token-value">AXM-RU-7X9B-2026</span>
-            <p style="font-size: 0.75rem; margin-top: 1rem;">This token expires in 10 minutes.</p>
+        <!-- Simulated Profile View -->
+        <div id="profileState" class="profile-view">
+            <h2 style="font-weight: 800; margin-bottom: 0.5rem;">Verified Identity</h2>
+            <div style="background: #f9fafb; padding: 1.5rem; border-radius: 20px; margin: 1.5rem 0; display: flex; align-items: center; gap: 15px; border: 1px solid var(--border);">
+                <div class="avatar">R</div>
+                <div style="text-align: left;">
+                    <div style="font-weight: 800;" id="userName">Ruphak Varmaa</div>
+                    <div style="font-size: 0.85rem; color: var(--text-dim);">ruphak@axiom-code.com</div>
+                </div>
+                <span class="success" style="margin-left: auto;">✓</span>
+            </div>
+            <p style="color: var(--text-dim); font-size: 0.9rem;">Your account is ready for agentic delegation. Generate a token to authorize your CLI.</p>
+            <button class="btn-primary" style="width: 100%; margin-top: 2rem;" onclick="generateToken()">Generate CLI Access Key</button>
         </div>
 
-        <p style="margin-top: 2rem; font-size: 0.85rem; color: var(--text-dim);">
-            New to Axiom? <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Create an account</a>
-        </p>
+        <!-- Token View -->
+        <div id="tokenState" style="display: none;">
+            <h2 style="font-weight: 800;">CLI Access Authorized</h2>
+            <div class="token-display">
+                <span style="font-size: 0.85rem; color: var(--text-dim);">Verification Token:</span>
+                <span class="token-val" id="tokenVal">AXM-RU-7X9B-2026</span>
+                <div id="timerContainer" style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #ef4444; margin-top: 5px; font-weight: 700;">
+                    Expires in: <span id="countdown">03:00</span>
+                </div>
+                <button class="btn-primary" style="background: #fff; color: var(--primary); padding: 0.5rem 1rem; font-size: 0.8rem; margin-top: 1rem;" onclick="copyToken()">Copy Token</button>
+            </div>
+            <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-dim);">Paste this token into the terminal where you ran <code>axiom login</code>.</p>
+            <a href="index.html" style="display: block; margin-top: 2rem; color: var(--primary); text-decoration: none; font-weight: 700;">Return to Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Simulated Account Picker -->
+    <div class="picker-overlay" id="pickerOverlay" onclick="closePicker()">
+        <div class="picker-card" onclick="event.stopPropagation()">
+            <h3 style="margin-bottom: 1.5rem;">Choose an account</h3>
+            <div class="account-item" onclick="selectUser('Ruphak Varmaa', 'ruphak@axiom-code.com')">
+                <div class="avatar" style="background: #4285F4;">R</div>
+                <div>
+                    <div style="font-weight: 700;">Ruphak Varmaa</div>
+                    <div style="font-size: 0.8rem; color: var(--text-dim);">ruphak@axiom-code.com</div>
+                </div>
+            </div>
+            <div class="account-item" onclick="selectUser('Investor Guest', 'guest@vc-firm.com')">
+                <div class="avatar" style="background: #34A853;">I</div>
+                <div>
+                    <div style="font-weight: 700;">Investor Guest</div>
+                    <div style="font-size: 0.8rem; color: var(--text-dim);">guest@vc-firm.com</div>
+                </div>
+            </div>
+            <div style="padding: 1rem; border-top: 1px solid var(--border); margin-top: 1rem; color: var(--text-dim); font-size: 0.85rem; cursor: pointer;">
+                Use another account
+            </div>
+        </div>
     </div>
 
     <script>
-        function showToken() {
-            document.getElementById('tokenArea').style.display = 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        let timeLeft = 180;
+        let timerId = null;
+
+        function openPicker() {
+            document.getElementById('pickerOverlay').style.display = 'flex';
+        }
+
+        function closePicker() {
+            document.getElementById('pickerOverlay').style.display = 'none';
+        }
+
+        function selectUser(name, email) {
+            closePicker();
+            document.getElementById('initialState').style.display = 'none';
+            // Snap to profile view immediately as requested "without delay"
+            const profileHtml = document.getElementById('profileState').innerHTML;
+            document.getElementById('loginBox').innerHTML = profileHtml;
+            document.getElementById('userName').innerText = name;
+        }
+
+        function generateToken() {
+            // Random token generation: AXM-XXXX-XXXX-XXXX
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            const rnd = (len) => Array.from({length: len}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+            const token = `AXM-${rnd(4)}-${rnd(4)}-${rnd(4)}`;
+            
+            // Switch to token view immediately
+            document.getElementById('loginBox').innerHTML = document.getElementById('tokenState').innerHTML;
+            document.getElementById('tokenVal').innerText = token;
+            startTimer();
+        }
+
+        function startTimer() {
+            timerId = setInterval(() => {
+                timeLeft--;
+                const mins = Math.floor(timeLeft / 60);
+                const secs = timeLeft % 60;
+                document.getElementById('countdown').innerText = 
+                    `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    document.getElementById('tokenVal').innerText = 'EXPIRED';
+                    document.getElementById('tokenVal').style.color = '#ef4444';
+                }
+            }, 1000);
+        }
+
+        function copyToken() {
+            const token = document.getElementById('tokenVal').innerText;
+            if (token === 'EXPIRED') return;
+            navigator.clipboard.writeText(token);
+            alert('Token copied to clipboard!');
         }
     </script>
 </body>

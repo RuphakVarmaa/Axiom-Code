@@ -135,6 +135,11 @@ export function getActiveProfile(config) {
 }
 
 export function addProfile(config, name, profileData) {
+  // Sanitize API Key to prevent "ByteString" conversion errors (U+2028, etc.)
+  if (profileData.apiKey) {
+    profileData.apiKey = profileData.apiKey.replace(/[^\x20-\x7E]/g, '').trim();
+  }
+  
   config.profiles[name] = profileData;
   if (!config.activeProfile) {
     config.activeProfile = name;

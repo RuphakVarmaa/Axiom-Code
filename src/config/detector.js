@@ -9,6 +9,9 @@ import { PROVIDER_PRESETS } from './config.js';
 export function detectProviderFromKey(apiKey) {
     if (!apiKey) return null;
 
+    // Sanitize input (strip non-ASCII/hidden characters)
+    apiKey = apiKey.replace(/[^\x20-\x7E]/g, '').trim();
+
     // 1. OpenRouter (Elite Priority)
     if (apiKey.startsWith('sk-or-')) {
         return {

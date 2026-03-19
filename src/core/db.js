@@ -35,6 +35,7 @@ class DbManager {
             token TEXT PRIMARY KEY,
             user_id TEXT,
             expires_at DATETIME,
+            last_used_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(user_id) REFERENCES users(id)
         );
 
