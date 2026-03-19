@@ -169,6 +169,9 @@ export class AgentLoop {
       
       if (err.message?.includes('401') || err.message?.toLowerCase().includes('auth')) {
           console.log(theme.error(`\n  ${icons.error} LLM Provider Authentication failed.`));
+          if (err.responseBody) {
+              console.log(theme.dim(`  Provider Response: ${err.responseBody}`));
+          }
           console.log(theme.dim(`  This is your external API Key (OpenRouter/Anthropic), not your Axiom Account.`));
           console.log(theme.dim(`  Run ${theme.command('axiom config')} to update your credentials.`));
       } else {
