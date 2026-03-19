@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation — Axiom Code</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .install-guide {
+            max-width: 800px;
+            margin: 8rem auto;
+            padding: 0 5%;
+        }
+        .step {
+            margin-bottom: 4rem;
+        }
+        .step h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .step p {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        .code-block {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            position: relative;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .code-block .label {
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .tip {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            color: var(--text);
+            margin-top: 1rem;
+        }
+        .nav-back {
+            position: fixed;
+            top: 2rem;
+            left: 5%;
+            text-decoration: none;
+            color: var(--text-dim);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .nav-back:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="nav-back">← Back to Overview</a>
+
+    <article class="install-guide">
+        <header style="margin-bottom: 5rem;">
+            <h1 style="font-size: 3.5rem; font-weight: 800; line-height: 1.1;">Get Started with <br>Axiom Code</h1>
+            <p style="font-size: 1.25rem; color: var(--text-dim); margin-top: 1.5rem;">The elite agentic coding suite by Ruphak Varmaa. Professional setup in minutes.</p>
+        </header>
+
+        <div id="step1" class="step">
+            <h2>1. Prerequisites</h2>
+            <p>Ensure you have <strong>Node.js 18.0.0</strong> or higher installed on your system. Axiom Code is optimized for high-performance terminal environments.</p>
+            <div class="code-block">
+                <span class="label">Terminal</span>
+                node --version
+            </div>
+        </div>
+
+        <div id="step2" class="step">
+            <h2>2. Global Installation</h2>
+            <p>Install Axiom Code globally using npm. This gives you access to the <code>axiom</code> command anywhere on your machine.</p>
+            <div class="code-block">
+                <span class="label">Terminal</span>
+                npm install -g axiom-code@latest
+            </div>
+            <div class="tip">
+                <strong>Tip:</strong> Always include <code>@latest</code> to ensure you have the most recent "Three Power" updates by Ruphak Varmaa.
+            </div>
+        </div>
+
+        <div id="step3" class="step">
+            <h2>3. Initial Configuration</h2>
+            <p>Launch the CLI for the first time. Axiom will detect no profiles and guide you through adding your first LLM provider (Anthropic, OpenAI, or any specialized endpoint).</p>
+            <div class="code-block">
+                <span class="label">Terminal</span>
+                axiom
+            </div>
+            <p>Follow the interactive prompts to enter your API key and set your default model (e.g., <code>claude-3-5-sonnet</code>).</p>
+        </div>
+
+        <div id="step4" class="step">
+            <h2>4. Usage Patterns</h2>
+            <p>Axiom Code supports three primary modes of operation:</p>
+            
+            <h3 style="margin-top: 2rem;">Interactive REPL</h3>
+            <p>Best for deep architectural work and multi-step tasks.</p>
+            <div class="code-block">axiom</div>
+
+            <h3 style="margin-top: 2rem;">One-Shot Commands</h3>
+            <p>Perfect for quick edits or code analysis.</p>
+            <div class="code-block">axiom "Find all uses of useEffect and refactor to use a custom hook"</div>
+
+            <h3 style="margin-top: 2rem;">Standard Output Injection</h3>
+            <p>Axiom can read from pipes to process logs or diffs.</p>
+            <div class="code-block">git diff | axiom "Explain these changes and write a commit message"</div>
+        </div>
+
+        <div id="step5" class="step">
+            <h2>5. Elite Features</h2>
+            <p>Once setup, you can leverage the advanced suite directly through slash commands:</p>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 1rem;"><strong>/watch &lt;cmd&gt;</strong> — Activate <strong>Guardian Mode</strong> for proactive error correction.</li>
+                <li style="margin-bottom: 1rem;"><strong>/mcp</strong> — Connect to any <strong>Model Context Protocol</strong> server for dynamic tool-building.</li>
+                <li style="margin-bottom: 1rem;"><strong>/pr</strong> — Generate high-fidelity AI Pull Requests.</li>
+            </ul>
+        </div>
+    </article>
+
+    <footer style="margin-top: 10rem;">
+        <p>&copy; 2026 Axiom Code by <strong>Ruphak Varmaa</strong>. All rights reserved.</p>
+        <p>Visit: <a href="https://www.ruphak.me" style="color: var(--primary); text-decoration: none;">www.ruphak.me</a></p>
+    </footer>
+</body>
+</html>
