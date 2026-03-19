@@ -1,0 +1,43 @@
+{
+  "name": "axiom-cli",
+  "version": "1.0.0",
+  "description": "Universal agentic coding assistant for the terminal. Works with any LLM provider.",
+  "type": "module",
+  "bin": {
+    "axiom": "./bin/axiom.js"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node bin/axiom.js",
+    "test": "node --test src/**/*.test.js",
+    "lint": "eslint src/"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "coding-assistant",
+    "agentic",
+    "llm",
+    "openai",
+    "anthropic",
+    "gemini",
+    "terminal"
+  ],
+  "author": "Ruphak",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "glob": "^11.0.0",
+    "inquirer": "^9.3.0",
+    "marked": "^14.0.0",
+    "marked-terminal": "^7.2.0",
+    "node-fetch": "^3.3.2",
+    "ora": "^8.1.0",
+    "playwright": "^1.58.2"
+  }
+}
