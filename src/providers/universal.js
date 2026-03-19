@@ -36,8 +36,12 @@ export class UniversalProvider {
    * Build headers for the request
    */
   _headers() {
-    const h = { 'Content-Type': 'application/json' };
-    if (this.apiKey) h['Authorization'] = `Bearer ${this.apiKey}`;
+    const h = { 
+      'Content-Type': 'application/json',
+      'X-Title': 'Axiom Code (Ruphak Varmaa)',
+      'HTTP-Referer': 'https://www.ruphak.me'
+    };
+    if (this.apiKey) h['Authorization'] = `Bearer ${this.apiKey.trim()}`;
     return h;
   }
 
