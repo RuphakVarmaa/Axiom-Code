@@ -1,9 +1,17 @@
-# Axiom CLI
+# Axiom Code
 
 > **"it is true but cannot be proved"**  
-> *Developed & maintained by Ruphak*
+> *Developed & maintained by **Ruphak Varmaa** (www.ruphak.me)*
 
 Axiom is a powerful, universal agentic coding assistant for the terminal. It is designed to be a significant upgrade over existing CLIs by allowing you to bring your own API keys for **any** OpenAI-compatible endpoint (Anthropic, OpenAI, DeepSeek, Gemini, Ollama, Groq, etc.).
+
+## 💠 The Three Functions of Axiom Code
+
+Axiom Code is built on three core engineering pillars, designed by **Ruphak Varmaa** for professional-grade autonomy:
+
+1.  **Engineering (Deep Code Intelligence)**: Powered by local RAG, sub-agent delegation, and surgical file edits. Elite intelligence for large-scale software engineering.
+2.  **Exploration (Limitless Browsing)**: Autonomous web navigation with Playwright. Fetch documentation, scrape technical insights, and act on the web in real-time.
+3.  **Protection (Guardian Mode)**: Autonomous error detection and proactive self-correction. Guardian identifies and fixes bugs before they crash your session.
 
 ## 🚀 Features
 
@@ -19,7 +27,7 @@ Axiom is a powerful, universal agentic coding assistant for the terminal. It is 
 ## 📦 Installation
 
 ```bash
-npm install -g axiom-cli
+npm install -g axiom-code@latest
 ```
 
 ## 🛠️ Usage
@@ -72,4 +80,4 @@ All configuration and sessions are stored in `~/.axiom`.
 You can define multiple profiles in `~/.axiom/config.json`.
 
 ---
-*Built by Ruphak*
+*Built by **Ruphak Varmaa** — [www.ruphak.me](https://www.ruphak.me)*

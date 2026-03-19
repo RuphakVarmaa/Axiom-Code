@@ -1,24 +1,23 @@
 /**
  * Axiom — Theme & Color Palette
- * Premium dark cyberpunk aesthetic
+ * Ultraprofessional Light Aesthetic (Claude-inspired)
  */
 
 import chalk from 'chalk';
 import boxen from 'boxen';
 
-// Claude/Anthropic inspired premium dark palette
+// Professional Light Palette
 const palette = {
-  primary: '#d97757',    // Claude-like clay/rust orange for brand
-  secondary: '#38bdf8',  // Sky 400 - brighter blue for better visibility
-  surface: '#18181b',    // Gray 900
-  surfaceHighlight: '#27272a',
-  text: '#e4e4e7',       // Gray 200
-  dim: '#a1a1aa',        // Zinc 400 - brighter gray for better visibility
-  success: '#10b981',    // Emerald 500
-  warning: '#f59e0b',    // Amber 500
-  error: '#ef4444',      // Red 500
-  codeBg: '#1e1e1e',
-  codePink: '#ec4899',
+  primary: '#cc5c33',    // Professional orange-clay
+  secondary: '#2563eb',  // Deep blue
+  surface: '#ffffff',    // Plain white
+  bg: '#f9fafb',         // Gray 50
+  border: '#e5e7eb',     // Gray 200
+  text: '#1f2937',       // Gray 800
+  dim: '#6b7280',        // Gray 500
+  success: '#059669',    // Emerald 600
+  warning: '#d97706',    // Amber 600
+  error: '#dc2626',      // Red 600
 };
 
 export const theme = {
@@ -40,20 +39,20 @@ export const theme = {
   prompt: chalk.hex(palette.primary).bold,
   userInput: chalk.hex(palette.text),
   assistantText: chalk.hex(palette.text),
-  code: chalk.hex('#38bdf8'),          
-  filePath: chalk.hex(palette.warning).underline,
-  command: chalk.hex(palette.codePink),       
+  code: chalk.hex(palette.secondary).bold,          
+  filePath: chalk.hex(palette.primary).underline,
+  command: chalk.hex('#be185d'), // Pink 700      
 
   // Tool status
-  toolName: chalk.hex('#a78bfa').bold,
+  toolName: chalk.hex('#6d28d9').bold, // Violet 700
   toolRunning: chalk.hex(palette.warning),
   toolDone: chalk.hex(palette.success),
   toolError: chalk.hex(palette.error),
 
   // Decorators
-  border: chalk.hex(palette.dim),
-  separator: chalk.hex(palette.surfaceHighlight),
-  badge: (text) => chalk.bgHex(palette.surfaceHighlight).hex(palette.text)(` ${text} `),
+  border: chalk.hex(palette.border),
+  separator: chalk.hex(palette.border),
+  badge: (text) => chalk.bgHex(palette.border).hex(palette.text)(` ${text} `),
   
   // Boxen wrappers
   panel: (content, title = '') => boxen(content, {
@@ -61,13 +60,15 @@ export const theme = {
     padding: 1,
     margin: { top: 1, bottom: 1 },
     borderStyle: 'round',
-    borderColor: '#3f3f46', // zinc-700
+    borderColor: '#d1d5db', // Gray 300
+    backgroundColor: '#ffffff',
   }),
   
   compactPanel: (content) => boxen(content, {
     padding: { left: 1, right: 1 },
     borderStyle: 'round',
-    borderColor: '#3f3f46',
+    borderColor: '#d1d5db',
+    backgroundColor: '#ffffff',
   })
 };
 
@@ -75,19 +76,19 @@ export const icons = {
   axiom: '▲',
   prompt: '❯',
   thinking: '⟡',
-  success: '✔',
-  error: '✖',
-  warning: '⚠',
-  file: '📄',
-  folder: '📁',
+  success: '✓',
+  error: '✗',
+  warning: '!',
+  file: '□',
+  folder: '▣',
   command: '❯_',
-  search: '🔍',
-  web: '🌐',
-  task: '◻',
-  subagent: '↱',
-  lock: '🔒',
-  key: '🔑',
+  search: '⌕',
+  web: '☁',
+  task: '○',
+  subagent: '↳',
+  lock: '◷',
+  key: '⚿',
   arrow: '→',
   bullet: '•',
-  spinner: ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'],
+  spinner: ['-', '\\', '|', '/'], 
 };

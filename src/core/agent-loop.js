@@ -104,6 +104,7 @@ export class AgentLoop {
     let text = '';
     const toolCalls = [];
     let spinnerStopped = false;
+    let lineCount = 0;
 
     try {
       const stream = this.provider.streamChat(
@@ -119,8 +120,10 @@ export class AgentLoop {
               spinner.stop();
               spinnerStopped = true;
               process.stdout.write('\n');
+              lineCount++;
             }
             process.stdout.write(chunk.content);
+            lineCount += (chunk.content.match(/\n/g) || []).length;
             text += chunk.content;
             break;
 
@@ -147,8 +150,11 @@ export class AgentLoop {
 
       // Render text as markdown if it contains formatting
       if (text && !toolCalls.length) {
-        // Clear screen line
-        process.stdout.write('\r' + ' '.repeat(process.stdout.columns) + '\r');
+        // Clear all streamed lines to avoid duplication
+        for (let i = 0; i < lineCount + 1; i++) {
+          process.stdout.write('\x1b[1A\x1b[2K');
+        }
+        process.stdout.write('\r');
         console.log(renderMarkdown(text));
       } else if (text) {
         process.stdout.write('\n');

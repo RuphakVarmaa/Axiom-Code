@@ -1,5 +1,5 @@
 {
-  "name": "axiom-cli",
+  "name": "axiom-code",
   "version": "1.0.0",
   "description": "Universal agentic coding assistant for the terminal. Works with any LLM provider.",
   "type": "module",
@@ -23,7 +23,7 @@
     "gemini",
     "terminal"
   ],
-  "author": "Ruphak",
+  "author": "Ruphak Varmaa",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"

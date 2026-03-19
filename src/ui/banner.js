@@ -19,15 +19,17 @@ export function printBanner(config) {
   const provider = config?.profiles?.[profile]?.provider || 'universal';
   const git = getGitInfo();
 
-  const title = theme.brandBold(` ${icons.axiom} AXIOM `) + theme.dim(` ${version} `);
-  const subtitle = theme.dim('Universal Agentic Coding Assistant');
+  const title = theme.brandBold(`▲ AXIOM CODE `) + theme.dim(`v${version}`);
+  const credits = theme.dim('by ') + theme.brandBold('Ruphak Varmaa') + theme.dim(' (www.ruphak.me)');
   
+  const pillars = 
+    `${theme.info('💻 Engineering')}  ${theme.info('🧭 Exploration')}  ${theme.info('🛡️ Protection')}`;
+
   const details = 
-    `${theme.dim('Profile:')}  ${theme.info(profile).padEnd(21)} ${theme.dim('Model:')} ${theme.info(model)}\n` +
-    `${theme.dim('Provider:')} ${theme.info(provider).padEnd(21)} ${theme.dim('Cmds:')}  ${theme.brand('/help')}` +
+    `${theme.dim('Profile:')} ${theme.info(profile)} | ${theme.dim('Model:')} ${theme.info(model)} | ${theme.brand('/help')}` +
     (git ? `\n${git}` : '');
 
-  const bannerContent = `${title}\n${subtitle}\n\n${details}`;
+  const bannerContent = `${title}\n${credits}\n\n${pillars}\n\n${details}`;
 
   console.log(theme.panel(bannerContent));
 }
