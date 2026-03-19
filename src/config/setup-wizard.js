@@ -5,25 +5,61 @@
 
 import inquirer from 'inquirer';
 import { PROVIDER_PRESETS, addProfile, saveConfig } from './config.js';
+import { detectProviderFromKey } from './detector.js';
 import { theme, icons } from '../ui/theme.js';
 import { printWelcome } from '../ui/banner.js';
 
 export async function runSetupWizard(config) {
   printWelcome();
 
-  const presetChoices = Object.entries(PROVIDER_PRESETS).map(([key, preset]) => ({
-    name: `${preset.label}${preset.noApiKey ? ' (no API key needed)' : ''}`,
-    value: key,
-  }));
+  const presetChoices = [
+    { name: theme.brandBold('✨ Smart Setup (Just Paste API Key)'), value: 'smart' },
+    ...Object.entries(PROVIDER_PRESETS).map(([key, preset]) => ({
+      name: `${preset.label}${preset.noApiKey ? ' (no API key needed)' : ''}`,
+      value: key,
+    }))
+  ];
 
-  const { providerKey } = await inquirer.prompt([{
+  let { providerKey } = await inquirer.prompt([{
     type: 'list',
     name: 'providerKey',
-    message: theme.brand('Choose your LLM provider:'),
+    message: theme.brand('How would you like to configure Axiom?'),
     choices: presetChoices,
   }]);
 
-  const preset = PROVIDER_PRESETS[providerKey];
+  let apiKey = '';
+  let preset = null;
+
+  if (providerKey === 'smart') {
+      const { inputKey } = await inquirer.prompt([{
+          type: 'password',
+          name: 'inputKey',
+          message: theme.brand('Paste your API Key:'),
+          mask: '*',
+          validate: (v) => v.length > 5 ? true : 'API key seems too short',
+      }]);
+      
+      const detected = detectProviderFromKey(inputKey);
+      if (detected) {
+          console.log(theme.success(`  ${icons.success} Detected: ${theme.brandBold(detected.label)}`));
+          providerKey = detected.key;
+          preset = detected;
+          apiKey = inputKey;
+      } else {
+          console.log(theme.warning(`  ${icons.warning} Could not auto-detect. Falling back to manual selection.`));
+          const fallback = await inquirer.prompt([{
+              type: 'list',
+              name: 'providerKey',
+              message: theme.brand('Select provider manually:'),
+              choices: presetChoices.filter(c => c.value !== 'smart'),
+          }]);
+          providerKey = fallback.providerKey;
+          preset = PROVIDER_PRESETS[providerKey];
+          apiKey = inputKey;
+      }
+  } else {
+      preset = PROVIDER_PRESETS[providerKey];
+  }
   const profile = {
     provider: preset.provider,
     baseUrl: preset.baseUrl,
@@ -49,17 +85,19 @@ export async function runSetupWizard(config) {
     profile.model = model;
   }
 
-  // API key (unless local provider)
-  if (!preset.noApiKey) {
-    const { apiKey } = await inquirer.prompt([{
+  // API key (if not already collected via Smart Setup and not a local provider)
+  if (!apiKey && !preset.noApiKey) {
+    const { inputKey } = await inquirer.prompt([{
       type: 'password',
-      name: 'apiKey',
+      name: 'inputKey',
       message: theme.brand(`Enter your ${preset.label} API key:`),
       mask: '*',
       validate: (v) => v.length > 5 ? true : 'API key seems too short',
     }]);
-    profile.apiKey = apiKey;
+    apiKey = inputKey;
   }
+  
+  profile.apiKey = apiKey;
 
   // Model override
   if (providerKey !== 'custom') {
