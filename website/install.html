@@ -94,14 +94,25 @@
         </div>
 
         <div id="step2" class="step">
-            <h2>2. Global Installation</h2>
-            <p>Install Axiom Code globally using npm. This gives you access to the <code>axiom</code> command anywhere on your machine.</p>
+            <h2>2. Installation & Early Access</h2>
+            <p>Axiom Code is currently in <strong>Private Beta</strong>. If the global public command returns a 404, utilize the local development installation:</p>
+            
+            <h3 style="margin-top: 1.5rem; font-size: 1.2rem;">Option A: Local Linking (Recommended)</h3>
+            <div class="code-block">
+                <span class="label">Terminal</span>
+                cd axiom-cli<br>
+                npm install<br>
+                npm link
+            </div>
+            <p>This will link the <code>axiom</code> command to your local repository, allowing instant execution of your latest changes.</p>
+
+            <h3 style="margin-top: 1.5rem; font-size: 1.2rem;">Option B: Public Registry</h3>
             <div class="code-block">
                 <span class="label">Terminal</span>
                 npm install -g axiom-code@latest
             </div>
             <div class="tip">
-                <strong>Tip:</strong> Always include <code>@latest</code> to ensure you have the most recent "Three Power" updates by Ruphak Varmaa.
+                <strong>Important:</strong> If you see a 404 error on the public registry, use <strong>Option A</strong> to build from the source by Ruphak Varmaa.
             </div>
         </div>
 

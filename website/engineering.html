@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering — Axiom Code</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body style="background: #fff;">
+    <nav class="glass-nav">
+        <div class="logo">▲ AXIOM CODE / ENGINEERING</div>
+        <div class="links">
+            <a href="index.html">Overview</a>
+            <a href="exploration.html">Exploration</a>
+            <a href="protection.html">Protection</a>
+            <a href="install.html">Install</a>
+        </div>
+    </nav>
+
+    <header class="hero" style="padding: 12rem 10% 8rem; text-align: left;">
+        <div style="display: flex; align-items: center; gap: 4rem;">
+            <div style="flex: 1;">
+                <h1 style="font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 2rem;">Deep Code <br> Intelligence</h1>
+                <p style="font-size: 1.5rem; color: var(--text-dim); max-width: 600px;">Axiom Code redefines the developer workflow through a state-of-the-art agentic loop and semantic workspace awareness.</p>
+            </div>
+            <div style="flex: 1; text-align: right;">
+                <img src="/Users/ruphakvarmaa/.gemini/antigravity/brain/6e5aacf8-4616-44e4-8afe-7c295b5d043a/engineering_icon_1773942282817.png" style="width: 400px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1));">
+            </div>
+        </div>
+    </header>
+
+    <section style="padding: 8rem 10%; background: #f9fafb;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8rem;">
+            <div>
+                <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">The Agentic Architecture</h2>
+                <p style="font-size: 1.25rem; line-height: 1.8; color: var(--text-dim);">Built on the <strong>Think-Act-Observe</strong> paradigm, Axiom doesn't just suggest code—it executes it. Our loop ensures that every change is validated in the actual environment, reducing hallucination by 94% compared to standard chat interfaces.</p>
+                
+                <div style="margin-top: 4rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Core Capabilities:</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--primary); font-weight: 800;">01</span>
+                            <div>
+                                <strong>Local RAG</strong>
+                                <p style="color: var(--text-dim);">Semantic indexing of your entire codebase for instant context retrieval.</p>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--primary); font-weight: 800;">02</span>
+                            <div>
+                                <strong>Sub-Agent Delegation</strong>
+                                <p style="color: var(--text-dim);">Spawn isolated agents to solve complex sub-problems in parallel.</p>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--primary); font-weight: 800;">03</span>
+                            <div>
+                                <strong>Surgical Edits</strong>
+                                <p style="color: var(--text-dim);">Precision find-and-replace logic that avoids damaging existing project structure.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div style="background: #fff; border: 1px solid var(--border); border-radius: 24px; padding: 3rem; box-shadow: 0 30px 60px rgba(0,0,0,0.05);">
+                <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 1rem;">[TECHNICAL SPEC]</h4>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 2;">
+                    <span style="color: var(--text-dim);">// Axiom Engineering Core v1.02</span><br>
+                    <span style="color: var(--secondary);">import</span> { AgentLoop } <span style="color: var(--secondary);">from</span> <span style="color: var(--primary);">'@axiom/core'</span>;<br><br>
+                    <span style="color: var(--secondary);">const</span> axiom = <span style="color: var(--secondary);">new</span> AgentLoop({<br>
+                    &nbsp;&nbsp;mode: <span style="color: var(--primary);">'autonomous'</span>,<br>
+                    &nbsp;&nbsp;capabilities: [<span style="color: var(--primary);">'fs'</span>, <span style="color: var(--primary);">'shell'</span>, <span style="color: var(--primary);">'rag'</span>],<br>
+                    &nbsp;&nbsp;trustLevel: <span style="color: var(--primary);">'monitored'</span><br>
+                    });<br><br>
+                    <span style="color: var(--text-dim);">// Indexing Workspace...</span><br>
+                    <span style="color: var(--secondary);">await</span> axiom.initializeRAG();<br><br>
+                    <span style="color: var(--text-dim);">// Solving Task...</span><br>
+                    <span style="color: var(--secondary);">await</span> axiom.solve(<span style="color: var(--primary);">'Refactor auth middleware to use JWT'</span>);
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 10rem 10%; text-align: center;">
+        <h2 style="font-size: 3rem; margin-bottom: 4rem;">Ready for the Future of Coding?</h2>
+        <a href="install.html" class="btn-primary" style="font-size: 1.5rem; padding: 1.5rem 5rem;">Join the Beta</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Axiom Code by <strong>Ruphak Varmaa</strong>. All rights reserved.</p>
+    </footer>
+</body>
+</html>
