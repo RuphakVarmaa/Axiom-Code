@@ -14,6 +14,7 @@ import { AgentLoop } from './core/agent-loop.js';
 import { ContextManager } from './core/context.js';
 import { SessionManager } from './session/session.js';
 import { theme, icons } from './ui/theme.js';
+import auth from './core/auth.js';
 
 const VERSION = '1.0.0';
 
@@ -54,6 +55,11 @@ export async function run(argv) {
       // First-run setup
       if (config._isNew || Object.keys(config.profiles).length === 0) {
         config = await runSetupWizard(config);
+      }
+
+      // Authentication Check
+      if (!auth.isAuthenticated() && !messageParts.includes('login')) {
+          await auth.promptLogin();
       }
 
       // Profile override
@@ -142,6 +148,14 @@ export async function run(argv) {
     .action(() => {
       const sm = new SessionManager();
       sm.displayList();
+    });
+
+  // Login subcommand
+  program
+    .command('login')
+    .description('Authenticate with Axiom Code Portal')
+    .action(async () => {
+        await auth.promptLogin();
     });
 
   await program.parseAsync(argv);

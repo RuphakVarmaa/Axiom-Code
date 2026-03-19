@@ -12,6 +12,7 @@ import { checkPermission } from '../permissions/permission.js';
 import { createSpinner, toolSpinner } from '../ui/spinner.js';
 import { renderMarkdown, renderToolResult } from '../ui/renderer.js';
 import { theme, icons } from '../ui/theme.js';
+import history from './history.js';
 
 export class AgentLoop {
   constructor(provider, context, config) {
@@ -159,6 +160,9 @@ export class AgentLoop {
       } else if (text) {
         process.stdout.write('\n');
       }
+
+      // Automatically log interaction to local SQLite
+      await history.log(message, text, this.provider.model);
 
     } catch (err) {
       spinner.fail(theme.error('Failed'));

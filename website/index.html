@@ -10,22 +10,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
     <nav class="glass-nav">
         <div class="logo">▲ AXIOM CODE</div>
         <div class="links">
             <a href="#powers">The Three Functions</a>
-            <a href="#install">Install</a>
+            <a href="install.html">Install Guide</a>
             <a href="https://github.com/RuphakVarmaa/axiom-cli">GitHub</a>
+            <a href="login.html" style="color: var(--primary); font-weight: 800;">Portal / Login</a>
             <a href="https://www.ruphak.me">Author</a>
         </div>
     </nav>
 
     <header class="hero">
-        <h1 class="gradient-text">The World's Safest <br> Agentic Coding Assistant</h1>
-        <p class="subtitle">Universal, autonomous, and private by default. <br> Built by <strong>Ruphak Varmaa</strong>.</p>
-        <div class="cta-group">
-            <code class="install-cmd">npm install -g axiom-code@latest</code>
-            <p style="color: var(--text-dim); font-size: 0.8rem; margin-top: 0.5rem;">[Private Beta] Ensure you are in the project root to run locally.</p>
+        <div class="animate">
+            <h1 class="gradient-text">The World's Safest <br> Agentic Coding Assistant</h1>
+            <p class="subtitle">Universal, autonomous, and private by default. <br> Built by <strong>Ruphak Varmaa</strong>.</p>
+        </div>
+        <div class="cta-group animate delay-1">
+            <code class="install-cmd">npx github:RuphakVarmaa/axiom-cli</code>
+            <p style="color: var(--text-dim); font-size: 0.8rem; margin-top: 0.5rem;">[Global Instant Access] Run anywhere without installation.</p>
             <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center;">
                 <a href="install.html" class="btn-primary">Full Setup Guide</a>
                 <a href="#powers" class="btn-primary" style="background: var(--text); color: white;">The Pitch</a>
@@ -33,10 +41,10 @@
         </div>
     </header>
 
-    <section id="powers" class="feature-grid three-pillars">
+    <section id="powers" class="feature-grid animate delay-2">
         <a href="engineering.html" class="feature-card glass highlight hover-interact" style="text-decoration: none; color: inherit;">
             <div class="icon-container">
-                <img src="/Users/ruphakvarmaa/.gemini/antigravity/brain/6e5aacf8-4616-44e4-8afe-7c295b5d043a/engineering_icon_1773942282817.png" alt="Engineering" class="pillar-icon">
+                <img src="assets/engineering_icon.png" alt="Engineering" class="pillar-icon">
             </div>
             <h3>1. Engineering</h3>
             <p><strong>Deep Code Intelligence.</strong> Local RAG, sub-agent delegation, and surgical file edits for elite-tier software engineering.</p>
@@ -44,7 +52,7 @@
         </a>
         <a href="exploration.html" class="feature-card glass highlight hover-interact" style="text-decoration: none; color: inherit;">
             <div class="icon-container">
-                <img src="/Users/ruphakvarmaa/.gemini/antigravity/brain/6e5aacf8-4616-44e4-8afe-7c295b5d043a/exploration_icon_1773942299768.png" alt="Exploration" class="pillar-icon">
+                <img src="assets/exploration_icon.png" alt="Exploration" class="pillar-icon">
             </div>
             <h3>2. Exploration</h3>
             <p><strong>Limitless Browsing.</strong> Playwright-powered autonomous exploration. Fetch docs, scrape insights, and act on the web.</p>
@@ -52,7 +60,7 @@
         </a>
         <a href="protection.html" class="feature-card glass highlight hover-interact" style="text-decoration: none; color: inherit;">
             <div class="icon-container">
-                <img src="/Users/ruphakvarmaa/.gemini/antigravity/brain/6e5aacf8-4616-44e4-8afe-7c295b5d043a/protection_icon_1773942319902.png" alt="Protection" class="pillar-icon">
+                <img src="assets/protection_icon.png" alt="Protection" class="pillar-icon">
             </div>
             <h3>3. Protection</h3>
             <p><strong>Guardian Mode.</strong> Proactive error detection and self-correction. Built-in crash avoidance by Ruphak Varmaa.</p>
@@ -60,26 +68,44 @@
         </a>
     </section>
 
-    <section id="features" class="feature-grid">
-        <div class="feature-card glass small">
-            <div class="icon">🔌</div>
+    <section class="animate delay-3">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">Interactive Intelligence</h2>
+        <div class="chat-preview">
+            <div class="chat-bubble user">Axiom, analyze this codebase and explain the data flow.</div>
+            <div class="chat-bubble axiom">
+                <strong>[AXIOM CODE]</strong> Identifying 4 key modules...<br>
+                1. <code>src/core</code> handles the agentic loop.<br>
+                2. <code>src/tools</code> provides environment interaction.<br>
+                The data flows from the <strong>Think</strong> phase through tools into <strong>Observation</strong>.
+            </div>
+            <div class="chat-bubble user">Can you refactor the API layer to support multi-tenancy?</div>
+            <div class="chat-bubble axiom">
+                <span class="thinking">⟡ Spawning Sub-Agent...</span><br>
+                Analyzing 12 affected files. Proposing surgical edits to <code>config.js</code> and <code>db-client.js</code>.
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="feature-grid animate delay-4">
+        <div class="feature-card glass">
+            <div class="icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🔌</div>
             <h3>MCP Ecosystem</h3>
             <p>Dynamic tool injection from any Model Context Protocol server.</p>
         </div>
-        <div class="feature-card glass small">
-            <div class="icon">🚀</div>
+        <div class="feature-card glass">
+            <div class="icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
             <h3>Elite Git</h3>
             <p>Nuclear-tier version control with AI-powered PR generation.</p>
         </div>
-        <div class="feature-card glass small">
-            <div class="icon">🔒</div>
+        <div class="feature-card glass">
+            <div class="icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🔒</div>
             <h3>Security First</h3>
             <p>Workspace Trust system ensures your data stays yours.</p>
         </div>
     </section>
 
-    <section class="demo-section">
-        <div class="terminal-mock glass">
+    <section class="demo-section animate">
+        <div class="terminal-mock">
             <div class="header">
                 <span class="dot red"></span>
                 <span class="dot yellow"></span>

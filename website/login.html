@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Axiom Code Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .login-container {
+            max-width: 450px;
+            margin: 10rem auto;
+            padding: 3rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .btn-social {
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-social:hover {
+            background: #f9fafb;
+        }
+        .divider {
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            margin: 0 1rem;
+        }
+        .input-group {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dim);
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.85rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+        .token-display {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--primary-light);
+            border: 1px dashed var(--primary);
+            border-radius: 12px;
+        }
+        .token-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.25rem;
+            letter-spacing: 2px;
+            margin: 1rem 0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="login-container animate">
+        <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Welcome Back</h1>
+        <p style="color: var(--text-dim);">Authenticate with your Axiom identity.</p>
+
+        <div class="social-login">
+            <button class="btn-social" onclick="showToken()">
+                <img src="https://www.google.com/favicon.ico" width="20"> Continue with Google
+            </button>
+            <button class="btn-social" onclick="showToken()">
+                <img src="https://github.com/favicon.ico" width="20"> Continue with GitHub
+            </button>
+        </div>
+
+        <div class="divider">or</div>
+
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="name@company.com">
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" placeholder="••••••••">
+        </div>
+        
+        <button class="btn-primary" style="width: 100%;" onclick="showToken()">Sign In</button>
+
+        <div id="tokenArea" class="token-display">
+            <p style="font-size: 0.85rem; color: var(--text-dim);">Authentication Successful. Paste this token into your terminal:</p>
+            <span class="token-value">AXM-RU-7X9B-2026</span>
+            <p style="font-size: 0.75rem; margin-top: 1rem;">This token expires in 10 minutes.</p>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 0.85rem; color: var(--text-dim);">
+            New to Axiom? <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Create an account</a>
+        </p>
+    </div>
+
+    <script>
+        function showToken() {
+            document.getElementById('tokenArea').style.display = 'block';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

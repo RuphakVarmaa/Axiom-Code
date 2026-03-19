@@ -15,6 +15,7 @@ import { setYoloMode, resetSessionPermissions } from './permissions/permission.j
 import { resetTodos } from './tools/write-todos.js';
 import { theme, icons } from './ui/theme.js';
 import { printBanner } from './ui/banner.js';
+import history from './core/history.js';
 
 export class Repl {
   constructor(provider, config) {
@@ -244,6 +245,12 @@ ${diff.diff}`;
         resetSessionPermissions();
         this.sessionId = null;
         console.log(theme.success(`  ${icons.success} Conversation cleared.`));
+        break;
+
+      case 'compact':
+      case 'history':
+        const limit = parseInt(args[0]) || 5;
+        await history.displayHistory(limit);
         break;
 
       case 'compact':
