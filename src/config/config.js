@@ -41,8 +41,14 @@ export const PROVIDER_PRESETS = {
   anthropic: {
     provider: 'anthropic-native',
     baseUrl: 'https://api.anthropic.com',
-    defaultModel: 'claude-sonnet-4-20250514',
+    defaultModel: 'claude-3-5-sonnet-20240620',
     label: 'Anthropic (Claude)',
+  },
+  openrouter: {
+    provider: 'universal',
+    baseUrl: 'https://openrouter.ai/api/v1',
+    defaultModel: 'auto',
+    label: 'OpenRouter',
   },
   gemini: {
     provider: 'gemini-native',
