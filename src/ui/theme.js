@@ -9,11 +9,11 @@ import boxen from 'boxen';
 // Claude/Anthropic inspired premium dark palette
 const palette = {
   primary: '#d97757',    // Claude-like clay/rust orange for brand
-  secondary: '#2563eb',  // Deep elegant blue
+  secondary: '#38bdf8',  // Sky 400 - brighter blue for better visibility
   surface: '#18181b',    // Gray 900
   surfaceHighlight: '#27272a',
   text: '#e4e4e7',       // Gray 200
-  dim: '#71717a',        // Gray 500
+  dim: '#a1a1aa',        // Zinc 400 - brighter gray for better visibility
   success: '#10b981',    // Emerald 500
   warning: '#f59e0b',    // Amber 500
   error: '#ef4444',      // Red 500
